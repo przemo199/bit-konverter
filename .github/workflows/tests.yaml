@@ -1,0 +1,27 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+
+    steps:
+    - name: Checkout project sources
+      uses: actions/checkout@v4
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: "corretto"
+        java-version: "21"
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+    - name: Run tests
+      run: ./gradlew test
