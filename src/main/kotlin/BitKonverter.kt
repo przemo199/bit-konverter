@@ -36,7 +36,7 @@ object BitKonverter {
      */
     @JvmStatic
     inline fun getBytes(value: Char): ByteArray {
-        return byteArrayOf(value.code.toByte())
+        return getBytes(value.code.toShort())
     }
 
     /**
@@ -149,7 +149,7 @@ object BitKonverter {
      */
     @JvmStatic
     inline fun toChar(bytes: ByteArray, startIndex: Int = 0): Char {
-        return bytes[startIndex].toInt().toChar()
+        return toInt(bytes, startIndex).toChar()
     }
 
     /**
@@ -277,7 +277,7 @@ object BitKonverter {
      */
     @JvmStatic
     inline fun toString(bytes: ByteArray, startIndex: Int = 0, endIndex: Int = bytes.size): String {
-        return bytes.sliceArray(startIndex..endIndex).toString()
+        return String(bytes.sliceArray(startIndex..<endIndex))
     }
 
     /**

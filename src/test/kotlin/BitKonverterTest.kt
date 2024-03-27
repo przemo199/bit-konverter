@@ -5,6 +5,23 @@ import kotlin.test.assertEquals
 class BitKonverterTest {
 
     @Test
+    fun boolean_test() {
+        assertTrue(byteArrayOf(1).contentEquals(BitKonverter.getBytes(true)))
+        assertTrue(byteArrayOf(0).contentEquals(BitKonverter.getBytes(false)))
+        assertEquals(true, BitKonverter.toBoolean(byteArrayOf(1)))
+        assertEquals(false, BitKonverter.toBoolean(byteArrayOf(0)))
+    }
+
+    @Test
+    fun char_symmetry_test() {
+        (-32768..32767).map(Int::toChar).forEach {
+            val byteArray = BitKonverter.getBytes(it)
+            assertEquals(2, byteArray.size)
+            assertEquals(it, BitKonverter.toChar(byteArray))
+        }
+    }
+
+    @Test
     fun short_test() {
         assertTrue(byteArrayOf(1, 0).contentEquals(BitKonverter.getBytes(1.toShort())))
         assertTrue(byteArrayOf(0, 0).contentEquals(BitKonverter.getBytes(0.toShort())))
@@ -130,5 +147,11 @@ class BitKonverterTest {
             assertEquals(8, byteArray.size)
             assertEquals(it, BitKonverter.toULong(byteArray))
         }
+    }
+
+    @Test
+    fun string_test() {
+        val text = "test text"
+        assertEquals(text, BitKonverter.toString(text.toByteArray()))
     }
 }
