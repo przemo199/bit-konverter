@@ -47,10 +47,8 @@ object BitKonverter {
      */
     @JvmStatic
     fun getBytes(value: Short): ByteArray {
-        return ByteArray(Short.SIZE_BYTES).also {
-            for (i in (0..1)) {
-                it[i] = (value.toInt() shr (i * BYTE_SIZE)).toByte()
-            }
+        return ByteArray(Short.SIZE_BYTES) {
+            (value.toInt() shr (it * BYTE_SIZE)).toByte()
         }
     }
 
@@ -62,10 +60,8 @@ object BitKonverter {
      */
     @JvmStatic
     fun getBytes(value: Int): ByteArray {
-        return ByteArray(Int.SIZE_BYTES).also {
-            for (i in (0..<Int.SIZE_BYTES)) {
-                it[i] = (value shr (i * BYTE_SIZE)).toByte()
-            }
+        return ByteArray(Int.SIZE_BYTES) {
+            (value shr (it * BYTE_SIZE)).toByte()
         }
     }
 
@@ -77,10 +73,8 @@ object BitKonverter {
      */
     @JvmStatic
     fun getBytes(value: Long): ByteArray {
-        return ByteArray(Long.SIZE_BYTES).also {
-            for (i in (0..<Long.SIZE_BYTES)) {
-                it[i] = (value shr (i * BYTE_SIZE)).toByte()
-            }
+        return ByteArray(Long.SIZE_BYTES) {
+            (value shr (it * BYTE_SIZE)).toByte()
         }
     }
 
