@@ -1,3 +1,5 @@
+package org.github.przemo199.bitkonverter
+
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.test.assertEquals

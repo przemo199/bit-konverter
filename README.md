@@ -1,5 +1,9 @@
 # bit-konverter
 
+[![Tests](https://github.com/przemo199/bit-konverter/actions/workflows/tests.yaml/badge.svg)](https://github.com/przemo199/bit-konverter/actions/workflows/tests.yaml)
+[![](https://jitpack.io/v/przemo199/bit-konverter.svg)](https://jitpack.io/#przemo199/bit-konverter)
+
+
 BitKonverter is a small utility library inspired by C#'s BitConverter class which provides handy conversion methods from common Kotlin data types into ByteArray and vice versa.
 
 Additionally, a set of extension functions is available to simplify library usage, simply look for the ```toByteArray``` and ```fromByteArray``` methods on the type you wish to convert.
@@ -21,15 +25,15 @@ Supported types:
 
 Convert to ```ByteArray```
 ```kotlin
-println(BitKonverter.getBytes(1).contentToString()) // [1, 0, 0, 0]
-println(1.toByteArray().contentToString()) // [1, 0, 0, 0]
+BitKonverter.getBytes(1) // [1, 0, 0, 0]
+1.toByteArray() // [1, 0, 0, 0]
 ```
 
 Convert from ```ByteArray```
 
 ```kotlin
-println(BitKonverter.toInt(byteArrayOf(1, 0, 0, 0)) // 1
-println(Int.fromByteArray(byteArrayOf(1, 0, 0, 0))) // 1
+BitKonverter.toInt(byteArrayOf(1, 0, 0, 0)) // 1
+Int.fromByteArray(byteArrayOf(1, 0, 0, 0)) // 1
 ```
 
 ## Limitations

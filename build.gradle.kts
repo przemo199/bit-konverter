@@ -1,10 +1,13 @@
+import org.gradle.kotlin.dsl.test
+import org.gradle.kotlin.dsl.testImplementation
+
 plugins {
     java
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.0.0"
     `maven-publish`
 }
 
-group = "org.example"
+group = "com.github.przemo199"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -26,9 +29,9 @@ kotlin {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "org.example"
+            groupId = "com.github.przemo199"
             artifactId = "bit-konverter"
-            version = "0.0.1"
+            version = "0.0.3"
 
             from(components["java"])
         }

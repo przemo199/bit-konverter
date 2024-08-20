@@ -1,3 +1,5 @@
+package org.github.przemo199.bitkonverter
+
 import kotlin.jvm.JvmStatic
 
 private const val BYTE_SIZE: Int = 8
@@ -15,6 +17,7 @@ object BitKonverter {
     /**
      * This field indicates the "endianess" of the architecture.
      */
+    @JvmField
     val isLittleEndian: Boolean = true
 
     /**
@@ -24,7 +27,7 @@ object BitKonverter {
      * @return A [ByteArray] with length one
      */
     @JvmStatic
-    inline fun getBytes(value: Boolean): ByteArray {
+    fun getBytes(value: Boolean): ByteArray {
         return byteArrayOf(if (value) 1 else 0)
     }
 
@@ -35,7 +38,7 @@ object BitKonverter {
      * @return A [ByteArray] with length two
      */
     @JvmStatic
-    inline fun getBytes(value: Char): ByteArray {
+    fun getBytes(value: Char): ByteArray {
         return getBytes(value.code.toShort())
     }
 
@@ -85,7 +88,7 @@ object BitKonverter {
      * @return A [ByteArray] with length two
      */
     @JvmStatic
-    inline fun getBytes(value: UShort): ByteArray {
+    fun getBytes(value: UShort): ByteArray {
         return getBytes(value.toShort())
     }
 
@@ -96,7 +99,7 @@ object BitKonverter {
      * @return A [ByteArray] with length four
      */
     @JvmStatic
-    inline fun getBytes(value: UInt): ByteArray {
+    fun getBytes(value: UInt): ByteArray {
         return getBytes(value.toInt())
     }
 
@@ -107,7 +110,7 @@ object BitKonverter {
      * @return A [ByteArray] with length eight
      */
     @JvmStatic
-    inline fun getBytes(value: ULong): ByteArray {
+    fun getBytes(value: ULong): ByteArray {
         return getBytes(value.toLong())
     }
 
@@ -118,7 +121,7 @@ object BitKonverter {
      * @return A [ByteArray] with length four
      */
     @JvmStatic
-    inline fun getBytes(value: Float): ByteArray {
+    fun getBytes(value: Float): ByteArray {
         return getBytes(value.toRawBits())
     }
 
@@ -129,7 +132,7 @@ object BitKonverter {
      * @return A [ByteArray] with length eight
      */
     @JvmStatic
-    inline fun getBytes(value: Double): ByteArray {
+    fun getBytes(value: Double): ByteArray {
         return getBytes(doubleBitsToLong(value))
     }
 
@@ -142,7 +145,7 @@ object BitKonverter {
      * @return [Char] converted from [bytes]
      */
     @JvmStatic
-    inline fun toChar(bytes: ByteArray, startIndex: Int = 0): Char {
+    fun toChar(bytes: ByteArray, startIndex: Int = 0): Char {
         return toInt(bytes, startIndex).toChar()
     }
 
@@ -244,7 +247,7 @@ object BitKonverter {
      * @return [Float] converted from [bytes]
      */
     @JvmStatic
-    inline fun toFloat(bytes: ByteArray, startIndex: Int = 0): Float {
+    fun toFloat(bytes: ByteArray, startIndex: Int = 0): Float {
         return Float.fromBits(toInt(bytes, startIndex))
     }
 
@@ -257,7 +260,7 @@ object BitKonverter {
      * @return [Double] converted from [bytes]
      */
     @JvmStatic
-    inline fun toDouble(bytes: ByteArray, startIndex: Int = 0): Double {
+    fun toDouble(bytes: ByteArray, startIndex: Int = 0): Double {
         return Double.fromBits(toLong(bytes, startIndex))
     }
 
@@ -270,7 +273,7 @@ object BitKonverter {
      * @return [String] converted from [bytes]
      */
     @JvmStatic
-    inline fun toString(bytes: ByteArray, startIndex: Int = 0, endIndex: Int = bytes.size): String {
+    fun toString(bytes: ByteArray, startIndex: Int = 0, endIndex: Int = bytes.size): String {
         return String(bytes.sliceArray(startIndex..<endIndex))
     }
 
@@ -283,7 +286,7 @@ object BitKonverter {
      * @return [Boolean] converted from [bytes]
      */
     @JvmStatic
-    inline fun toBoolean(bytes: ByteArray, startIndex: Int = 0): Boolean {
+    fun toBoolean(bytes: ByteArray, startIndex: Int = 0): Boolean {
         return bytes[startIndex] == 1.toByte()
     }
 
@@ -291,7 +294,7 @@ object BitKonverter {
      * Converts an [Int] bits into a [Float]
      */
     @JvmStatic
-    inline fun intBitsToFloat(value: Int): Float {
+    fun intBitsToFloat(value: Int): Float {
         return toFloat(getBytes(value))
     }
 
@@ -299,7 +302,7 @@ object BitKonverter {
      * Converts a [Double] bits into a [Long]
      */
     @JvmStatic
-    inline fun doubleBitsToLong(value: Double): Long {
+    fun doubleBitsToLong(value: Double): Long {
         return value.toRawBits()
     }
 
@@ -307,71 +310,71 @@ object BitKonverter {
      * Converts a [Long] bits into a [Double]
      */
     @JvmStatic
-    inline fun longBitsToDouble(value: Long): Double {
+    fun longBitsToDouble(value: Long): Double {
         return Double.fromBits(value)
     }
 }
 
-inline fun Boolean.toByteArray(): ByteArray {
+fun Boolean.toByteArray(): ByteArray {
     return BitKonverter.getBytes(this)
 }
 
-inline fun Boolean.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Boolean {
+fun Boolean.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Boolean {
     return BitKonverter.toBoolean(bytes, startIndex)
 }
 
-inline fun Char.toByteArray(): ByteArray {
+fun Char.toByteArray(): ByteArray {
     return BitKonverter.getBytes(this)
 }
 
-inline fun Char.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Char {
+fun Char.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Char {
     return BitKonverter.toChar(bytes, startIndex)
 }
 
-inline fun Short.toByteArray(): ByteArray {
+fun Short.toByteArray(): ByteArray {
     return BitKonverter.getBytes(this)
 }
 
-inline fun Short.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Short {
+fun Short.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Short {
     return BitKonverter.toShort(bytes, startIndex)
 }
 
-inline fun Int.toByteArray(): ByteArray {
+fun Int.toByteArray(): ByteArray {
     return BitKonverter.getBytes(this)
 }
 
-inline fun Int.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Int {
+fun Int.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Int {
     return BitKonverter.toInt(bytes, startIndex)
 }
 
-inline fun Long.toByteArray(): ByteArray {
+fun Long.toByteArray(): ByteArray {
     return BitKonverter.getBytes(this)
 }
 
-inline fun Long.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Long {
+fun Long.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Long {
     return BitKonverter.toLong(bytes, startIndex)
 }
 
-inline fun ULong.toByteArray(): ByteArray {
+fun ULong.toByteArray(): ByteArray {
     return BitKonverter.getBytes(this)
 }
 
-inline fun ULong.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): ULong {
+fun ULong.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): ULong {
     return BitKonverter.toULong(bytes, startIndex)
 }
 
-inline fun Float.toByteArray(): ByteArray {
+fun Float.toByteArray(): ByteArray {
     return BitKonverter.getBytes(this)
 }
 
-inline fun Float.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Float {
+fun Float.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Float {
     return BitKonverter.toFloat(bytes, startIndex)
 }
 
-inline fun Double.toByteArray(): ByteArray {
+fun Double.toByteArray(): ByteArray {
     return BitKonverter.getBytes(this)
 }
 
-inline fun Double.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Double {
+fun Double.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Double {
     return BitKonverter.toDouble(bytes, startIndex)
 }
