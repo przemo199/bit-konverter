@@ -4,7 +4,7 @@
 [![](https://jitpack.io/v/przemo199/bit-konverter.svg)](https://jitpack.io/#przemo199/bit-konverter)
 
 
-BitKonverter is a small utility library inspired by C#'s BitConverter class which provides handy conversion methods from common Kotlin data types into ByteArray and vice versa.
+BitKonverter is a small utility library inspired by C#'s BitConverter class, it provides handy conversion methods from common Kotlin data types into ByteArray and vice versa.
 
 Additionally, a set of extension functions is available to simplify library usage, simply look for the ```toByteArray``` and ```fromByteArray``` methods on the type you wish to convert.
 
