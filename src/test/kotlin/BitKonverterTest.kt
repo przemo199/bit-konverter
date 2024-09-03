@@ -25,9 +25,19 @@ class BitKonverterTest {
 
     @Test
     fun short_test() {
+        assertEquals(1.toShort(), BitKonverter.toShort(byteArrayOf(1)))
         assertTrue(byteArrayOf(1, 0).contentEquals(BitKonverter.getBytes(1.toShort())))
         assertTrue(byteArrayOf(0, 0).contentEquals(BitKonverter.getBytes(0.toShort())))
         assertTrue(byteArrayOf(-1, -1).contentEquals(BitKonverter.getBytes((-1).toShort())))
+    }
+
+    @Test
+    fun short_conversion_from_index_test() {
+        val first = 1.toShort()
+        val second = 2.toShort()
+        val byteArray = BitKonverter.getBytes(first) + BitKonverter.getBytes(second)
+        assertEquals(first, BitKonverter.toShort(byteArray))
+        assertEquals(second, BitKonverter.toShort(byteArray, Short.SIZE_BYTES))
     }
 
     @Test
@@ -41,9 +51,19 @@ class BitKonverterTest {
 
     @Test
     fun int_test() {
+        assertEquals(1, BitKonverter.toInt(byteArrayOf(1)))
         assertTrue(byteArrayOf(1, 0, 0, 0).contentEquals(BitKonverter.getBytes(1)))
         assertTrue(byteArrayOf(0, 0, 0, 0).contentEquals(BitKonverter.getBytes(0)))
         assertTrue(byteArrayOf(-1, -1, -1, -1).contentEquals(BitKonverter.getBytes(-1)))
+    }
+
+    @Test
+    fun int_conversion_from_index_test() {
+        val first = 1
+        val second = 2
+        val byteArray = BitKonverter.getBytes(first) + BitKonverter.getBytes(second)
+        assertEquals(first, BitKonverter.toInt(byteArray))
+        assertEquals(second, BitKonverter.toInt(byteArray, Int.SIZE_BYTES))
     }
 
     @Test
@@ -57,9 +77,19 @@ class BitKonverterTest {
 
     @Test
     fun long_test() {
+        assertEquals(1, BitKonverter.toLong(byteArrayOf(1)))
         assertTrue(byteArrayOf(1, 0, 0, 0, 0, 0, 0, 0).contentEquals(BitKonverter.getBytes(1.toLong())))
         assertTrue(byteArrayOf(0, 0, 0, 0, 0, 0, 0, 0).contentEquals(BitKonverter.getBytes(0.toLong())))
         assertTrue(byteArrayOf(-1, -1, -1, -1, -1, -1, -1, -1).contentEquals(BitKonverter.getBytes((-1).toLong())))
+    }
+
+    @Test
+    fun long_conversion_from_index_test() {
+        val first = 1.toLong()
+        val second = 2.toLong()
+        val byteArray = BitKonverter.getBytes(first) + BitKonverter.getBytes(second)
+        assertEquals(first, BitKonverter.toLong(byteArray))
+        assertEquals(second, BitKonverter.toLong(byteArray, Long.SIZE_BYTES))
     }
 
     @Test
@@ -105,9 +135,19 @@ class BitKonverterTest {
 
     @Test
     fun ushort_test() {
+        assertEquals(1.toUShort(), BitKonverter.toUShort(byteArrayOf(1)))
         assertTrue(byteArrayOf(1, 0).contentEquals(BitKonverter.getBytes(1.toUShort())))
         assertTrue(byteArrayOf(0, 0).contentEquals(BitKonverter.getBytes(0.toUShort())))
         assertTrue(byteArrayOf(-1, -1).contentEquals(BitKonverter.getBytes((-1).toUShort())))
+    }
+
+    @Test
+    fun ushort_conversion_from_index_test() {
+        val first = 1.toUShort()
+        val second = 2.toUShort()
+        val byteArray = BitKonverter.getBytes(first) + BitKonverter.getBytes(second)
+        assertEquals(first, BitKonverter.toUShort(byteArray))
+        assertEquals(second, BitKonverter.toUShort(byteArray, UShort.SIZE_BYTES))
     }
 
     @Test
@@ -121,9 +161,19 @@ class BitKonverterTest {
 
     @Test
     fun uint_test() {
+        assertEquals(1.toUInt(), BitKonverter.toUInt(byteArrayOf(1)))
         assertTrue(byteArrayOf(1, 0, 0, 0).contentEquals(BitKonverter.getBytes(1.toUInt())))
         assertTrue(byteArrayOf(0, 0, 0, 0).contentEquals(BitKonverter.getBytes(0.toUInt())))
         assertTrue(byteArrayOf(-1, -1, -1, -1).contentEquals(BitKonverter.getBytes((-1).toUInt())))
+    }
+
+    @Test
+    fun uint_conversion_from_index_test() {
+        val first = 1.toUInt()
+        val second = 2.toUInt()
+        val byteArray = BitKonverter.getBytes(first) + BitKonverter.getBytes(second)
+        assertEquals(first, BitKonverter.toUInt(byteArray))
+        assertEquals(second, BitKonverter.toUInt(byteArray, UInt.SIZE_BYTES))
     }
 
     @Test
@@ -137,9 +187,19 @@ class BitKonverterTest {
 
     @Test
     fun ulong_test() {
+        assertEquals(1.toULong(), BitKonverter.toULong(byteArrayOf(1)))
         assertTrue(byteArrayOf(1, 0).contentEquals(BitKonverter.getBytes(1.toUShort())))
         assertTrue(byteArrayOf(0, 0).contentEquals(BitKonverter.getBytes(0.toUShort())))
         assertTrue(byteArrayOf(-1, -1).contentEquals(BitKonverter.getBytes((-1).toUShort())))
+    }
+
+    @Test
+    fun ulong_conversion_from_index_test() {
+        val first = 1.toULong()
+        val second = 2.toULong()
+        val byteArray = BitKonverter.getBytes(first) + BitKonverter.getBytes(second)
+        assertEquals(first, BitKonverter.toULong(byteArray))
+        assertEquals(second, BitKonverter.toULong(byteArray, ULong.SIZE_BYTES))
     }
 
     @Test

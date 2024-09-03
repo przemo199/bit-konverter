@@ -1,19 +1,20 @@
 package org.github.przemo199.bitkonverter
 
 import kotlin.jvm.JvmStatic
-
-private const val BYTE_SIZE: Int = 8
-
-/**
- * byte identity mask
- */
-private const val BYTE_MASK: Int = 0xFF
+import kotlin.math.min
 
 /**
  * The BitKonverter object contains methods for converting an array of bytes to the data types,
  * as well as for converting a data type to an array of bytes.
  */
 object BitKonverter {
+    private const val BYTE_SIZE: Int = 8
+
+    /**
+     * byte identity mask
+     */
+    private const val BYTE_MASK: Int = 0xFF
+
     /**
      * This field indicates the "endianess" of the architecture.
      */
@@ -158,9 +159,7 @@ object BitKonverter {
      */
     @JvmStatic
     fun toShort(bytes: ByteArray, startIndex: Int = 0): Short {
-        return bytes.sliceArray(startIndex..<bytes.size).withIndex().fold(0) { accumulator, (index, value) ->
-            (value.toInt() and BYTE_MASK shl (BYTE_SIZE * index)) or accumulator
-        }.toShort()
+        return toInt(bytes, startIndex).toShort()
     }
 
     /**
@@ -173,9 +172,9 @@ object BitKonverter {
      */
     @JvmStatic
     fun toInt(bytes: ByteArray, startIndex: Int = 0): Int {
-        return bytes.sliceArray(startIndex..<bytes.size).withIndex().fold(0) { accumulator, (index, value) ->
-            (value.toInt() and BYTE_MASK shl (BYTE_SIZE * index)) or accumulator
-        }.toInt()
+        return (startIndex..<min(startIndex + Int.SIZE_BYTES, bytes.size)).withIndex().fold(0) { accumulator, (index, arrayIndex) ->
+            (bytes[arrayIndex].toInt() and BYTE_MASK shl (BYTE_SIZE * index)) or accumulator
+        }
     }
 
     /**
@@ -188,8 +187,8 @@ object BitKonverter {
      */
     @JvmStatic
     fun toLong(bytes: ByteArray, startIndex: Int = 0): Long {
-        return bytes.sliceArray(startIndex..<bytes.size).withIndex().fold(0.toLong()) { accumulator, (index, value) ->
-            (value.toLong() and BYTE_MASK.toLong() shl (BYTE_SIZE * index)) or accumulator
+        return (startIndex..<min(startIndex + Long.SIZE_BYTES, bytes.size)).withIndex().fold(0.toLong()) { accumulator, (index, arrayIndex) ->
+            (bytes[arrayIndex].toLong() and BYTE_MASK.toLong() shl (BYTE_SIZE * index)) or accumulator
         }
     }
 
@@ -203,9 +202,7 @@ object BitKonverter {
      */
     @JvmStatic
     fun toUShort(bytes: ByteArray, startIndex: Int = 0): UShort {
-        return bytes.sliceArray(startIndex..<bytes.size).withIndex().fold(0) { accumulator, (index, value) ->
-            (value.toInt() and BYTE_MASK shl (BYTE_SIZE * index)) or accumulator
-        }.toUShort()
+        return toInt(bytes, startIndex).toUShort()
     }
 
     /**
@@ -218,9 +215,7 @@ object BitKonverter {
      */
     @JvmStatic
     fun toUInt(bytes: ByteArray, startIndex: Int = 0): UInt {
-        return bytes.sliceArray(startIndex..<bytes.size).withIndex().fold(0) { accumulator, (index, value) ->
-            (value.toInt() and BYTE_MASK shl (BYTE_SIZE * index)) or accumulator
-        }.toUInt()
+        return toInt(bytes, startIndex).toUInt()
     }
 
     /**
@@ -233,9 +228,7 @@ object BitKonverter {
      */
     @JvmStatic
     fun toULong(bytes: ByteArray, startIndex: Int = 0): ULong {
-        return bytes.sliceArray(startIndex..<bytes.size).withIndex().fold(0.toULong()) { accumulator, (index, value) ->
-            (value.toULong() and BYTE_MASK.toULong() shl (BYTE_SIZE * index)) or accumulator
-        }
+        return toLong(bytes, startIndex).toULong()
     }
 
     /**
@@ -339,12 +332,28 @@ fun Short.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Short 
     return BitKonverter.toShort(bytes, startIndex)
 }
 
+fun UShort.toByteArray(): ByteArray {
+    return BitKonverter.getBytes(this)
+}
+
+fun UShort.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): UShort {
+    return BitKonverter.toUShort(bytes, startIndex)
+}
+
 fun Int.toByteArray(): ByteArray {
     return BitKonverter.getBytes(this)
 }
 
 fun Int.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Int {
     return BitKonverter.toInt(bytes, startIndex)
+}
+
+fun UInt.toByteArray(): ByteArray {
+    return BitKonverter.getBytes(this)
+}
+
+fun UInt.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): UInt {
+    return BitKonverter.toUInt(bytes, startIndex)
 }
 
 fun Long.toByteArray(): ByteArray {
@@ -377,4 +386,44 @@ fun Double.toByteArray(): ByteArray {
 
 fun Double.Companion.fromByteArray(bytes: ByteArray, startIndex: Int = 0): Double {
     return BitKonverter.toDouble(bytes, startIndex)
+}
+
+fun ByteArray.toBoolean(startIndex: Int = 0): Boolean {
+    return BitKonverter.toBoolean(this, startIndex)
+}
+
+fun ByteArray.toChar(startIndex: Int = 0): Char {
+    return BitKonverter.toChar(this, startIndex)
+}
+
+fun ByteArray.toShort(startIndex: Int = 0): Short {
+    return BitKonverter.toShort(this, startIndex)
+}
+
+fun ByteArray.toUShort(startIndex: Int = 0): UShort {
+    return BitKonverter.toUShort(this, startIndex)
+}
+
+fun ByteArray.toInt(startIndex: Int = 0): Int {
+    return BitKonverter.toInt(this, startIndex)
+}
+
+fun ByteArray.toUInt(startIndex: Int = 0): UInt {
+    return BitKonverter.toUInt(this, startIndex)
+}
+
+fun ByteArray.toLong(startIndex: Int = 0): Long {
+    return BitKonverter.toLong(this, startIndex)
+}
+
+fun ByteArray.toULong(startIndex: Int = 0): ULong {
+    return BitKonverter.toULong(this, startIndex)
+}
+
+fun ByteArray.toFloat(startIndex: Int = 0): Float {
+    return BitKonverter.toFloat(this, startIndex)
+}
+
+fun ByteArray.toDouble(startIndex: Int = 0): Double {
+    return BitKonverter.toDouble(this, startIndex)
 }
